@@ -16,7 +16,7 @@ public class Role implements GrantedAuthority {
 		return uuid;
 	}
 	
-	public void setId(String uuid) {
+	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
 

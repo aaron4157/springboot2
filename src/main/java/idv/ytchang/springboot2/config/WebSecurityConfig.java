@@ -27,27 +27,18 @@ public class WebSecurityConfig {
 	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {		
-		
+		// 只要設定客製參數即可
 		http
-		.authorizeRequests() // 定義須被保護URL		
-		.requestMatchers("/").permitAll() // 入口 URL'/' 不須驗證	
-		.requestMatchers("/css/*").permitAll() // css 不須驗證	
-		.requestMatchers("/js/*").permitAll() // javascripts 不須驗證	
-		.requestMatchers("/images/*").permitAll() // 圖檔 不須驗證	
-		.requestMatchers("/fonts/*").permitAll() // 字型 不須驗證	
-		.requestMatchers("/about").permitAll() // URL'/about' 不須驗證
-		.requestMatchers("/testimonial").permitAll() // URL'/testimonial' 不須驗證
-		.requestMatchers("/contact").permitAll() // URL '/contact' 不須驗證
+		.authorizeHttpRequests(authCustomizer  -> authCustomizer  
+		.requestMatchers("/","/login*","/signout").permitAll() // 入口 URL'/' 不須驗證	
+		.requestMatchers("/css/*","/js/*", "/images/*", "/fonts/*").permitAll() // 靜態資源 不須驗證	
 		.requestMatchers("/admin").hasRole("ADMIN") // ROLE_ADMIN角色可訪問 /admin 底下網址
-		.requestMatchers("/user").hasRole("USER") // ROLE_USER角色可訪問 /user 底下網址
-		.anyRequest().authenticated() // 其他尚未匹配的URL不限角色，仍要驗證再使用		
-		.and()
-		.rememberMe() // 保持登錄狀態
-		.and()
-		.formLogin((form) -> form.loginPage("/login").permitAll()) // 自訂登入頁面
+//		.requestMatchers("/user").hasRole("USER") // ROLE_USER角色可訪問 /user 底下網址
+		)
+		.formLogin((form) -> form.loginPage("/login")) // 自訂登入頁面
 		.logout((logout) -> logout.permitAll())	// 自訂登出跳轉	
-		.httpBasic(); // 基本HTTP驗證
-		
+		;
+				
 		return http.build();
 	}
 	

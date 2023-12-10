@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+  	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="demo project">
+  	<!-- https://www.javatpoint.com/bootstrap-4-login-form -->
+  	<link rel="stylesheet" href="/css/bootstrap.min.css" >
+  	<link rel="stylesheet" href="/css/signin.css" >
+  	<link rel="stylesheet" href="/css/font-awesome.min.css" >
+    <title>Login page</title>
+  
+  </head>
+  <body>
+  	<div id="wrapper" class="pt-5">
+  		<h1 class="text-center"><a th:href="@{/}"><img th:src="@{/images/logo.png}" style="width:200px"/></a>Springboot2</h1>
+  		
+  		<!-- https://www.baeldung.com/spring-security-remember-me -->
+	  	<div class="global-container">	  		
+	  		<div class="card login-form">
+	  			<div class="card-body">
+	  				<h3 class="card-title text-center">Login page</h3>
+				    <p th:if="${error}" class="alert alert-danger">Wrong user or password</p>
+				    <p th:if="${logout}" class="alert alert-success">You have been logged out.</p>
+				    <div class="card-text">
+					    <form th:action="@{/login}" method="post">
+					    	<div class="form-group">
+					    		<label for="username">Username</label>:
+					      		<input class="form-controls" type="text" id="username" name="username" autofocus="autofocus" />	
+					    	</div>
+					      	<div class="form-group">
+					      		<label for="password">Password</label>:
+					      		<input class="form-controls" type="password" id="password" name="password" />	
+					      	</div>	
+					      	<div class="form-group form-check">
+					      		<label for="remember-me">
+					      			<input class="form-check-input" type="checkbox" id="remember-me" name="remember-me">
+					      			Remember me?
+					      		</label>
+					      	</div>		    
+				      		<button class="btn btn-primary btn-block" type="submit" >Log in</button>
+				      		
+				    	</form>	
+				    	<div class="sign-up">  
+		                    Don't have an account? <a href="#"> Create One </a>  
+	                	</div>	    	
+			    	</div>
+	  			</div>
+  			</div>
+  			<div class="login-action text-center"></div>		    	
+	    </div>
+    </div>
+  </body>
+</html>

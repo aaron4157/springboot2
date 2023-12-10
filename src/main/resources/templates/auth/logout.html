@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+    <head>
+	    <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="demo project">
+	  	<!-- https://www.javatpoint.com/bootstrap-4-login-form -->
+	  	<link rel="stylesheet" href="/css/bootstrap.min.css" >
+	  	<link rel="stylesheet" href="/css/signin.css" >
+	  	<link rel="stylesheet" href="/css/font-awesome.min.css" >
+        <title>Sign out</title>
+        <style type="text/css">
+        	.global-container {
+      		    flex-direction: column;        		
+        	}
+        </style>
+    </head>
+    <body>
+    	<div class="global-container">
+	        <h1 class="text-center" th:inline="text">Are you signing out?</h1>
+	        <form th:action="@{/logout}" method="post">
+	            <button class="btn btn-primary btn-lg" type="submit" >Sign Out</button>
+	        </form>
+        </div>
+    </body>
+</html>
