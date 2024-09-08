@@ -9,7 +9,12 @@ public class Role implements GrantedAuthority {
 	private String role_name;
 
 	public Role() {
-		// TODO Auto-generated constructor stub
+		
+	}
+	
+	public Role(String uuid) {
+		super();
+		this.uuid = uuid;
 	}
 	
 	public String getUuid() {

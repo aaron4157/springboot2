@@ -15,4 +15,16 @@ public interface UserMapper {
 	
 	public List<Role> getRolesByUser(UserDetails user);
 	
+	public List<Role> queryRoles();
+	
+	public void insertUser(User user);
+	
+	public void addRoles(User user);
+	
+	public User getUserById(String uuid);
+	
+	public boolean updateUser(User user);
+	
+	public void initializeRoles(User user);
+	
 }

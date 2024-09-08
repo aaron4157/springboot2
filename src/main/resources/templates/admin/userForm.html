@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>User Form</title>
+</head>
+<body class="main-layout inner_page">
+<section>
+	<h1>[[${mode} + ' user']]</h1>
+	<h3 th:if="${message}">[[${message}]]</h3>
+</section>
+<section id="form">
+	<form method="POST" encoding="multipart/form-data" th:action="${mode} == 'create' ? @{/admin/insertUser} : @{/admin/updateUser}" th:object="${user}">
+		<p><label for="uuid">ID</label><input id="uuid" name="uuid" th:value="*{id}" disabled></p>
+		<p><label for="username">Username</label><input id="username" name="username" th:value="*{username}" required></p>
+		<p><label for="password">Password</label><input id="password" type="password" name="password" th:value="*{password}" required></p>
+		<p><label for="photo">Photo</label><input id="photo" type="file" name="photo"></p>
+		<p><label for="isAccountNonExpired">Account Not Expired <input id="isAccountNonExpired" type="checkbox" name="isAccountNonExpired" value="true" th:checked="*{isAccountNonExpired}"></label></p>
+		<p><label for="isAccountNonLocked">Account Not Locked <input id="isAccountNonLocked" type="checkbox" name="isAccountNonLocked" value="true" th:checked="*{isAccountNonLocked}"></label></p>
+		<p><label for="isCredentialsNonExpired">Credentials Not Expired <input id="isCredentialsNonExpired" type="checkbox" name="isCredentialsNonExpired" value="true" th:checked="*{isCredentialsNonExpired}"></label></p>
+		<p><label for="isEnabled">Enabled <input id="isEnabled" type="checkbox" name="isEnabled" value="true" th:checked="*{isEnabled}"></label></p>
+		<p><label for="authorities">Authorities</label>
+			<select id="authorities" name="authority" multiple>
+				<th:block th:each="role : ${roleList}">
+					<option th:value="${role.uuid}" >[[${role.authority}]]</option>
+				</th:block>
+			</select>
+		</p>
+		<p th:if="${mode} == 'edit'">Date created: [[*{#dates.format(dateCreated)}]]</p>
+		<p th:if="${mode} == 'edit'">Created by: [[*{createdBy}]]</p>
+		<p th:if="${mode} == 'edit'">Last updated: [[*{#dates.format(lastUpdated)}]]</p>
+		<p th:if="${mode} == 'edit'">Last updated by: [[*{lastUpdatedBy}]]</p>
+		<button type="submit">Submit</button>
+		<button type="reset">Clear</button>
+	</form>
+</section>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package idv.ytchang.springboot2.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -96,8 +97,25 @@ public class User implements UserDetails {
 		return authorities;
 	}
 	
+	/**
+	 * this setter is recognized by the framework and invoked during data binding
+	 * @param roles
+	 */
 	public void setAuthorities(Collection<? extends GrantedAuthority> roles) {
 		this.authorities = (List<Role>) roles;
+	}
+	
+	/**
+	 * This setter method HAS TO be invoked manually 
+	 * @param authorities
+	 */
+	public void setAuthorities(String... authorities) {
+		List<Role> roles = new ArrayList<>();
+		for(String authority : authorities) {
+			Role role = new Role(authority);
+			roles.add(role);
+		}
+		this.authorities = roles;
 	}
 
 	@Override
@@ -123,12 +141,20 @@ public class User implements UserDetails {
 		return is_account_non_expired;
 	}
 	
+	public boolean getIsAccountNonExpired() {
+		return is_account_non_expired;
+	}
+	
 	public void setIsAccountNonExpired(boolean isAccountNonLocked) {
 		this.is_account_non_expired = isAccountNonLocked;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
+		return is_account_non_locked;
+	}
+	
+	public boolean getIsAccountNonLocked() {
 		return is_account_non_locked;
 	}
 	
@@ -141,12 +167,20 @@ public class User implements UserDetails {
 		return is_credentials_non_expired;
 	}
 	
+	public boolean getIsCredentialsNonExpired() {
+		return is_credentials_non_expired;
+	}
+	
 	public void setIsCredentialsNonExpired(boolean isCredentialsNonExpired) {
 		this.is_credentials_non_expired = isCredentialsNonExpired;
 	}
 
 	@Override
 	public boolean isEnabled() {
+		return is_enabled;
+	}
+	
+	public boolean getIsEnabled() {
 		return is_enabled;
 	}
 	

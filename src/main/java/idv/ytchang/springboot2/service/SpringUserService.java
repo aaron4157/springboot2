@@ -34,8 +34,8 @@ public class SpringUserService implements UserDetailsService {
 			((User) appUser).setAuthorities(roles);
 		}
 		
-		//System.out.println("login: "+appUser.getUsername());
-		//System.out.println("roles:"+appUser.getAuthorities().stream().map(obj->obj.getAuthority()).collect(Collectors.toList()));
+//		System.out.println("login: "+appUser.getUsername());
+//		System.out.println("roles:"+appUser.getAuthorities().stream().map(obj->obj.getAuthority()).collect(Collectors.toList()));
 		
 		return appUser;
 	}

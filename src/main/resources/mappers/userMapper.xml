@@ -9,7 +9,7 @@
 		<id column="uuid" property="uuid" javaType="String" jdbcType="CHAR" />
 		<result column="username" property="username" javaType="String" />
 		<result column="password" property="password" javaType="String" />
-		<result column="isAccountNoExpired" property="is_account_non_expired" javaType="boolean"/>
+		<result column="isAccountNonExpired" property="is_account_non_expired" javaType="boolean"/>
 		<result column="isAccountNonLocked" property="is_account_non_locked" javaType="boolean"/>
 		<result column="isCredentialsNonExpired" property="is_credentials_non_expired" javaType="boolean"/>
 		<result column="isEnabled" property="is_enabled" javaType="boolean"/>
@@ -36,4 +36,54 @@
 			a.user_id = #{uuid}
 		</where>
 	</select>
+	<select id="queryRoles" resultType="Role">
+		select uuid, role_name authority from ds1.role
+	</select>
+	<select id="getUserById" resultType="User">
+		select uuid, username, 
+			is_account_non_expired, is_account_non_locked, is_credentials_non_expired, is_enabled,
+			created_by, last_updated, last_updated, last_updated_by 
+		from ds1.user 
+		<where>
+			uuid = #{uuid}
+		</where>
+	</select>
+	<insert id="insertUser" parameterType="User" keyProperty="uuid">
+		insert into ds1.user (uuid, username, password, is_account_non_expired, is_account_non_locked, is_credentials_non_expired, is_enabled, date_created, created_by, last_updated, last_updated_by) 
+		values (
+		#{uuid}, 
+		#{username}, 
+		#{password}, 
+		#{isAccountNonExpired}, 
+		#{isAccountNonLocked}, 
+		#{isCredentialsNonExpired}, 
+		#{isEnabled}, 
+		now(),
+		#{createdBy},
+		now(), 
+		#{lastUpdatedBy})
+	</insert>
+	<insert id="addRoles" parameterType="User">
+		insert into ds1.user_role (user_id, role_id) values
+		<foreach collection="authorities" index="index" item="role" separator=",">
+		(#{uuid}, #{role.uuid})
+		</foreach> 
+	</insert>
+	<update id="updateUser" parameterType="User">
+		update ds1.user set 
+		username = #{username}, 
+		<if test="#{password} != null">
+			password = #{password},
+		</if>
+		is_account_non_expired = #{isAccountNonExpired}, 
+		is_account_non_locked = #{isAccountNonLocked}, 
+		is_credentials_non_expired = #{isCredentialsNonExpired}, 
+		is_enabled = #{isEnabled}, 
+		last_updated = (), 
+		last_updated_by = #{lastUpdatedBy}
+		<where>uuid = #{uuid}</where>
+	</update>
+	<delete id="initializeRoles" parameterType="User">
+ delete ds1.user_role
+ <where>user_id = #{uuid}</where></delete>
 </mapper>
