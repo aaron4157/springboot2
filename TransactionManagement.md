@@ -16,11 +16,13 @@ Springboot 提供兩種方式管理事務(交易)，分別是編程式(programat
 
 ### 2.1 如何設定編程式事務管理
 
-一段範例程式碼如下
+一段範例程式碼如下。值得注意的是，只要設定好DataSource，顯式調用的DataSourceTransactionManager與JdbcTemplate便已存在Spring容器當中，可直接注入。
 
 ```
+@Autowired
+DataSourceTransactionManager transactionManager;
+
 someTransactionalMethod(params) {
-	DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(jdbcTemplate.getDataSource());
 	DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 	def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 	TransactionStatus status = transactionManager.getTransaction(def);
@@ -73,7 +75,7 @@ methodA() {
 
 Spring boot 框架使用事件監聽技術，應對事務的各種狀態。有:
 
-- AFTER_COMMT (提交後發送。預設)
+- AFTER_COMMIT (提交後發送。預設)
 - AFTER_ROLLBACK(回滾後發送)
 - AFTER_COMPLETION(不論提交或回滾皆會發送)
 - BEFORE_COMMIT (提交前發送)
